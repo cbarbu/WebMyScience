@@ -16,7 +16,7 @@ Dans Rstudio, il suffit d'ouvrir le fichier, puis:
 * pour app.R, installer shiny et lancer en cliquant sur le bouton "Run App"
 * pour plumber.R, voir la ligne pour le lancer en tête du fichier
 
-Pour plus de détails, voir le cours en tex/pdf
+Pour plus de détails, voir le cours en tex/pdf : [cours/presentation_cmbc.pdf](cours/presentation_cmbc.pdf).
 
 ### Comment participer ? 
 Je ne souhaite pas complexifier le cours (sauf peut-être ajout sur la configuration d'NGINX) mais les corrections sont les bienvenues sous la forme de pull-request ou de propositions mail à Corentin Barbu (INRAE).
