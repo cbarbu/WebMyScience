@@ -33,7 +33,7 @@ ui <- page_sidebar(
   # ou
   # ,machinOutput("refDansServer")
   # pour ajouter des élèments à la page interactive$
-  # ,uiOutput("testAPI")
+  ,uiOutput("testAPI")
 )
 
 # Define server logic required to draw a histogram ----
@@ -57,12 +57,17 @@ server <- function(input, output) {
     x    <- iris$Petal.Length
     bins <- seq(min(x), max(x), length.out = input$bins + 1)
     
-    hist(x, breaks = bins, col = "#007bc2", border = "white",
+    out <- hist(x, breaks = bins, col = "#007bc2", border = "white",
          xlab = "Longueurs de Pétales dans iris",
          ylab = "Fréquences",
          main = "Exemple de graphique interactif")
+    return(out)
   })
   output$testAPI <- renderUI({
+    # attention, il peut y avoir besoin d'utiliser
+    # 127.0.0.1 
+    # à la place de
+    # 0.0.0.0
     my_raw_result <- httr::GET("http://0.0.0.0:8000/testBis?q=truc")
     # browser()
     basic_content <- httr::content(my_raw_result, as = 'text',encoding="UTF-8")

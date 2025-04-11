@@ -36,4 +36,3 @@ function(q=""){
    out <- maFonctionTest(q)
    return(out)
 }
-

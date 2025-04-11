@@ -19,6 +19,7 @@ Il faut avoir installé [Quarto](https://quarto.org):
 # préparation de quelques variables réutilisables par la suite
 species <- unique(iris$Species)
 
+
 ```
 
 Le jeu de données iris est un jeu de données toujours présent dans R pour faire 
@@ -32,7 +33,7 @@ d'iris : `{r} species`.
 ```{r}
 #| label: fig-Petal_lengthFwidth
 #| fig-cap: "Une figure jolie mais pas interactive"
-#| warning: true
+#| warning: false
 
 library(ggplot2)
 ggplot(iris, aes(Petal.Width, Petal.Length)) + 
