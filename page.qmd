@@ -1,0 +1,72 @@
+---
+title: "Démo page basique"
+author: "Corentin Barbu"
+date: 2025-04-11
+format: 
+  html:
+    fig-width: 8
+    fig-height: 4
+    code-fold: true
+---
+## Pour visualiser ce fichier 
+Il faut avoir installé [Quarto](https://quarto.org): 
+
+* dans Rstudio : cliquer sur Render à côté de la touche pour sauvegarder le fichier
+* dans la console R : quarto_render("page.qmd")
+
+## Un peu de texte dépendant de données
+```{r}
+# préparation de quelques variables réutilisables par la suite
+species <- unique(iris$Species)
+
+```
+
+Le jeu de données iris est un jeu de données toujours présent dans R pour faire 
+des démonstrations. Il contient des données sur `{r} length(species)` types 
+d'iris : `{r} species`.
+
+
+## Une jolie figure (statique)
+@fig-Petal_lengthFwidth  Montre la relation entre longueur et largeur des pétales.
+
+```{r}
+#| label: fig-Petal_lengthFwidth
+#| fig-cap: "Une figure jolie mais pas interactive"
+#| warning: true
+
+library(ggplot2)
+ggplot(iris, aes(Petal.Width, Petal.Length)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+```
+
+## Et une jolie figure interactive
+```{r}
+#| include: false
+library("plotly")
+```
+Notez que sur la figure @fig-Petal_lengthFwidth_interactive vous pouvez visualiser 
+les valeurs des points et sélectionner les types d'iris visibles. 
+
+Pour voir toutes les possibilités ouvertes par Plotly, voir leur 
+[démonstrateur](https://plotly.com/r/).
+
+```{r}
+#| label: fig-Petal_lengthFwidth_interactive
+#| fig-cap: Une figure jolie ET interactive
+#| warning: false
+fig <- plot_ly(data = iris, x = ~Sepal.Length, y = ~Petal.Length, color = ~Species, colors = "Set1")
+
+fig
+```
+
+## Autres possibilités
+
+La [documentation](https://quarto.org/docs) de quarto est très complète. 
+Vous pouvez notamment créer des [blogs ou des sites complets](https://quarto.org/docs/websites/). 
+Vous pouvez aussi regarder cette petite [page de démo](template.html) 
+des possibilités ouvertes par la syntaxe. 
+
+Enfin, vous pouvez générer des [pdf ou autres types de documents](https://quarto.org/docs/output-formats/) 
+avec le même outil, en éditant simplement l'en-tête.
+Vous pouvez donc potentiellement générer des rapports ou articles avec Quarto. 

@@ -48,3 +48,14 @@ Thumbs.db
 *.mov
 *.wmv
 
+# temp files
+## Vim
+.*.sw*
+## latex
+*.aux
+## R 
+.RData
+
+## les sorties qui peuvent être reproduites
+*.html
+*_files/

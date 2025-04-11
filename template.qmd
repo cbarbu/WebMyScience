@@ -1,0 +1,122 @@
+---
+title: "Titre"
+subtitle: |
+  Sous-titre
+author:
+  - name: Author
+date: 2025-01-15
+date-modified: 2025-01-23
+categories:
+  - news 
+  - mocoriba-viz
+  - organisation
+execute: 
+  echo: false
+draft: false
+---
+
+# Formatage 
+
+## Courant
+*italic* **gras** ***gras italique*** `code verbatim` un carré^2^ ou un~indice~ ~~faux~~
+
+Ajout d'une note [^1].
+
+[^1]: Voici la note de bas de page.
+
+    Elle peut être sur plusieurs paragraphes si elle est indentée.
+
+Ça n'est pas dans la note car pas indenté.
+
+## HTML et CSS 
+
+On peut ajouter des classes sur des éléments span comme pour [Viz]{.VizIdentity}. Ou même des div: 
+
+::: {.btn-success #identifiant}
+Your content goes here.
+:::
+
+Ou faire du CSS ponctuel en utilisant 
+<span style='font-family: "Brush Script MT",cursive;'> simplement du code html </span>
+
+[Ou ajouter du CSS via Markdown]{style='font-family: "Brush Script MT",cursive;'}
+
+## Listes
+
+Pour une liste, il faut une ligne blanche au dessus de la liste:
+
+* niveau 1 
+* toujours niveau 1
+  + niveau 2
+    - niveau 3
+
+1. ordered list
+2. item 2
+    i) sub-item 1
+        A.  sub-sub-item 1
+        B.  Attention aux deux espaces après "lettre."
+
+On peut aussi faire des choses plus fancy genre des 
+
+- [ ] case non cochée
+- [x] case cochée
+
+Ou des numérotations de mini-titres de paragraphes 
+
+(@) mini titre 1
+
+Le point à développer
+
+(@) mini titre 2
+
+
+# Liens et images
+
+Un [lien](page.html), une ![image](/images/logo_mocoriba.png "popup on hover"){fit-alt="Alt text" height="100px"}, on peut mettre une image dans un lien sans problème ou utiliser une icone {{< fa rss >}} 
+(mais il faut pour cela installer l'[extension quarto fontawesome](https://github.com/quarto-ext/fontawesome)).
+
+Le / permet de savoir que l'on va à la racine du site mais on peut aussi mettre des adresses absolues d'images sur le net (mais ne pas oublier le texte alternatif.
+
+Une vidéo (le html peut être mis directement dans le texte, quatro se débrouille).
+
+<video width="320" height="240" controls>
+  <source src="https://mocoriba.fr/images/Séminaire_MoCoRiBA-Perspectives_et_échanges.mp4" type="video/mp4">
+</video> 
+Cette vidéo est prise sur mon site pour ne pas surcharger ce dépôt git. 
+
+# Insérer du R
+
+# R basique
+
+Pour faire du R on peut définir préparer du code en amont. 
+Notez que l'on peut remplacer r par python pour...
+
+```{r} 
+quatre <- 2+2
+```
+
+Et en mettre en ligne 2+2=`{r} quatre` 
+Notez le `execute: echo: false` en haut du script qui par défaut retire le code mais on peut ponctuellement l'ajouter cependant: 
+```{r} 
+#| echo: true
+#| code-fold: true
+quatre <- 2+2
+```
+
+# Figures
+On peut référencer une figure dans le texte (@fig-airquality).  
+
+```{r}
+#| label: fig-airquality
+#| fig-cap: "Temperature and ozone level."
+#| warning: false
+
+library(ggplot2)
+
+ggplot(airquality, aes(Temp, Ozone)) +
+  geom_point() +
+  geom_smooth(method = "loess")
+```
+
+
+
