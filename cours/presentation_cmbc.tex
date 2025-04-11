@@ -196,18 +196,17 @@ pdfkeywords={statistiques, métriques paysagères, élicitation, comparaison, bi
   \begin{frame}{Introduction}
     \begin{block}{Objectifs}
       \begin{itemize}
-        \item Savoir développer une application web pour rendre accessible des résultats de recherche ou des outils d’aide à la décision
-        \item Voir plus largement les outils de publications sur internet 
+        \item Voir les outils de publications sur internet et comprendre leurs spécificités
       \end{itemize}
-      \begin{block}{Programme}
-        \begin{itemize}
-          \item présentations des possibilités de mise en ligne suivant la complexité du projet et le public visé
+    \end{block}
+    \begin{block}{Programme}
+      \begin{itemize}
+        \item présentations des possibilités de mise en ligne suivant la complexité du projet 
           \item application minimaliste fonctionnant en local
           \item mise en ligne de l'application minimaliste sur un serveur
         \end{itemize}
         Note: les exemples seront tous en R mais les mêmes outils sont souvent aussi disponibles sous Python
       \end{block}
-    \end{block}
 
   \end{frame}
 
@@ -239,7 +238,7 @@ pdfkeywords={statistiques, métriques paysagères, élicitation, comparaison, bi
     \end{block}
   \end{frame}
 
-\section{Site Web en Quarto/plotly}
+\section{Spécificités des trois solutions}
   \begin{frame}{Quarto}
     Note: Si Rmarkdown (.Rmd) existe encore, il est progressivement remplacé par Quarto (.qmd)
     \begin{block}{Comment ça se présente}
@@ -259,24 +258,43 @@ pdfkeywords={statistiques, métriques paysagères, élicitation, comparaison, bi
       \end{itemize}
     \end{block}
   \end{frame}
-%   \begin{frame}{Hello World en Quarto + plotly}
-%     https://quarto.org/
-%   \end{frame}
-%   \begin{frame}{Etapes de l'atelier}
-%     \begin{itemize}
-%       \item Créer un site/blog quarto 
-%       \item Ajouter du texte dépendant de code R
-%       \item Ajouter un graphique dépendant de code R
-%       \item Ajouter un graphique interactif avec Plotly
-%     \end{itemize}
-%     
-%   \end{frame}
-
-\section{Application basique}
-  \begin{frame}{Hellow World en Shiny}
-    
+  \begin{frame}{Shiny}
+    \begin{block}{Comment ça se présente}
+      \begin{itemize}
+        \item Un fichier app.R (dans le cas le plus simple)
+        \item 2 fonctions : ui et server
+        \item D'autres choses avant qui définissent tout ce que l'on veut en R simple
+        \item possibilité d'inclure: 
+          \begin{itemize}
+            \item html et javascript
+            \item appel à des API externes
+          \end{itemize}
+      \end{itemize}
+    \end{block}
+    \begin{block}{Avantages et inconvénients}
+      \begin{itemize}
+        \item Extrêmement flexible
+        \item Relativement simple pour une application web (ui/server)
+        \item[\cross] Assez lent
+        \item[\cross] Plus complexe que R habituel, surtout sensible pour le débuggage
+      \end{itemize}
+    \end{block}
   \end{frame}
-
+  \begin{frame}{Plumber}
+    \begin{block}{Comment ça se présente}
+      \begin{itemize}
+        \item Un fichier .R chargé dans R (voir plumber.R)
+        \item Génération automatique d'une documentation en ligne et interactive (Swagger)
+      \end{itemize}
+    \end{block}
+    \begin{block}{Avantages et inconvénients}
+      \begin{itemize}
+        \item Extrêmement flexible
+        \item Très simple à prendre en main
+        \item Très rapide et relativement simple à débugger
+      \end{itemize}
+    \end{block}
+  \end{frame}
 \section{Les programmes compagnons}
   \begin{frame}{La gestion des codes}
     \begin{block}{Le protocole/programme ubiquitaire: git}
@@ -363,18 +381,28 @@ pdfkeywords={statistiques, métriques paysagères, élicitation, comparaison, bi
 \subsection{Installation et mise à jour}
      \begin{frame}{Logiciels de synchronisation}
        \begin{itemize}
-         \item Graphique : 
+         \item Graphique : ex: FileZilla
          \item en ligne de commande linux : rsync \\
              rsync -avz repSource/* user@server:repDest/
        \end{itemize}
     \end{frame}
 
-
+\section{Atelier}
   \begin{frame}{un site de démonstration}
     \url{https://github.com/cbarbu/WebMyScience}
-
     \includegraphics[scale=1]{webmyscience.png} \\
-    
+  \end{frame}
+  
+  \begin{frame}{Exercices supplémentaires possibles}
+    \begin{itemize}
+      \item Générer un pdf avec Quarto 
+      \item Faire un blog Quarto (contents: posts dans l'en-tête)
+      \item Faire une base de site Quarto (fichier \_quarto.yml)
+      \item ajouter un graphique plotly dans l'application
+      \item ajouter une entrée texte pour requêter l'API
+      \item Ajouter une fonction dans l'API : résultat de prédiction d'un modèle basé sur le jeu de données iris
+      \item Démonstration de mise en ligne sur un serveur (avec serveur OVH et Nginx)
+    \end{itemize}
   \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
