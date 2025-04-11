@@ -33,7 +33,8 @@ ui <- page_sidebar(
   # ou
   # ,machinOutput("refDansServer")
   # pour ajouter des élèments à la page interactive$
-  ,uiOutput("testAPI")
+  # pour ajouter une requête à l'API décommenter la ligne suivante mais attention, il faut lancer l'API par ailleurs (voir plumber.R)
+  # ,uiOutput("testAPI")
 )
 
 # Define server logic required to draw a histogram ----
