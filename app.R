@@ -32,7 +32,8 @@ ui <- page_sidebar(
   # ,fluidPage("Les trucs statiques que je veux mettre dedans")
   # ou
   # ,machinOutput("refDansServer")
-  # pour ajouter des élèments à la page interactive
+  # pour ajouter des élèments à la page interactive$
+  # ,uiOutput("testAPI")
 )
 
 # Define server logic required to draw a histogram ----
@@ -60,8 +61,15 @@ server <- function(input, output) {
          xlab = "Longueurs de Pétales dans iris",
          ylab = "Fréquences",
          main = "Exemple de graphique interactif")
-    
   })
-  
+  output$testAPI <- renderUI({
+    my_raw_result <- httr::GET("http://0.0.0.0:8000/testBis?q=truc")
+    # browser()
+    basic_content <- httr::content(my_raw_result, as = 'text',encoding="UTF-8")
+    out <- div(p("Vous avez fait une requête à l'API qui vous a répondu:"),
+               p(basic_content))
+    out
+  })
 }
+                               
 shinyApp(ui = ui, server = server)
