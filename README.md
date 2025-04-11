@@ -1,29 +1,14 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Objectif
 
-### What is this repository for? ###
+Ce dépôt est le support pour un cours sur la mise en ligne de contenu scientifique. Il donne un exemple de trois grands types de mise en ligne avec R : 
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Page statique (éventuellement avec des graphiques dynamiques), avec Quarto
+* WebApp pour plus d'interactivité, avec Shiny
+* API pour mettre à disposition des données plus ou moins traitées, avec Plumber
 
-### How do I get set up? ###
+### Pour plus de détails, voir le cours en tex/pdf
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### Comment participer ? 
+Je ne souhaite pas compléxifier le cours mais les corrections sont les bienvenues sous la forme de pull-request ou de propositions mail à Corentin Barbu (INRAE).
