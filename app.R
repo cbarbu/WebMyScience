@@ -24,9 +24,15 @@ ui <- page_sidebar(
       value = 30
     )
   )
+  ,fluidPage("Bonjour ça c'est complètement statique et géré directement côté client")
   ,textOutput("testTexte")
   # Output: Histogram ----
   ,plotOutput(outputId = "distPlot")
+  # il suffit d'ajouter de lignes comme :
+  # ,fluidPage("Les trucs statiques que je veux mettre dedans")
+  # ou
+  # ,machinOutput("refDansServer")
+  # pour ajouter des élèments à la page interactive
 )
 
 # Define server logic required to draw a histogram ----
@@ -41,7 +47,8 @@ server <- function(input, output) {
   #    re-executed when inputs (input$bins) change
   # 2. Its output type is a plot
   output$testTexte <- renderText({
-    out <- paste("Les types d'Iris dans iris sont :",paste(unique(iris$Species),collapse=","),"\n")
+    out <- paste("Ca c'est généré par le serveur. 
+                 Les types d'Iris dans iris sont :",paste(unique(iris$Species),collapse=","),"\n")
     out
   })
   output$distPlot <- renderPlot({
