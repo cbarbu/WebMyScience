@@ -1,0 +1,50 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/themes/color/beamercolorthemeforest.sty,v 1.9 2007/01/28 20:48:24 tantau Exp $
+
+
+\mode<presentation>
+
+\definecolor{forestgreen}{RGB}{0,100,0}
+\definecolor{forestblue}{RGB}{0,0,100}
+
+\setbeamercolor{structure}{fg=forestgreen}
+
+\definecolor{INRA@linst}{RGB}{102,193,191}
+\definecolor{INRA@dinst}{RGB}{0,150,152}
+\definecolor{INRA@cinst}{RGB}{39,86,98}
+
+\setbeamercolor{palette primary}{fg=forestblue,bg=forestgreen!20}
+\setbeamercolor{palette secondary}{fg=forestblue,bg=forestgreen!30}
+\setbeamercolor{palette tertiary}{fg=forestblue,bg=forestgreen!40}
+\setbeamercolor{palette quaternary}{fg=forestblue,bg=forestgreen!50}
+
+\setbeamercolor{titlelike}{parent=palette quaternary}
+
+\setbeamercolor{block title}{fg=forestblue,bg=forestgreen!50}
+\setbeamercolor{block title alerted}{use=alerted text,fg=forestblue,bg=alerted text.fg!75!bg}
+\setbeamercolor{block title example}{use=example text,fg=forestblue,bg=example text.fg!75!bg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
+\setbeamercolor{sidebar}{bg=forestgreen!70}
+  
+\setbeamercolor{palette sidebar primary}{fg=forestblue}
+\setbeamercolor{palette sidebar secondary}{fg=forestblue!75}
+\setbeamercolor{palette sidebar tertiary}{fg=forestblue!75}
+\setbeamercolor{palette sidebar quaternary}{fg=forestblue}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\mode
+<all>

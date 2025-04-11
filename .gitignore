@@ -53,6 +53,11 @@ Thumbs.db
 .*.sw*
 ## latex
 *.aux
+*.snm
+*.out
+*.nav
+*.toc
+
 ## R 
 .RData
 

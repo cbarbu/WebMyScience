@@ -1,0 +1,211 @@
+% type de document 
+% \documentclass[a4paper,12pt]{article} % document de type article elsevier
+\usepackage[active]{srcltx}
+% packages de fonts et de language
+% \usepackage{textcomp} 		% besoin pour frenchb du package babel
+\usepackage[english]{babel}	% le texte ajouté automatiquement dans le doc est en français sauf qu'il me fait des warnings donc zappé
+\usepackage[utf8]{inputenc} 	% autorise accents etc... nécessite babel [français]
+\usepackage[T1]{fontenc}	% permet l'utilisation du codage de caractère "moderne"
+\usepackage[normalem]{ulem}	% permet des soulignements / ratures spéciaux sur le texte
+% \usepackage[francais]{layout}
+% \usepackage[ansinew]{inputenc}	% quand je le met il me met des warning et il ne semble pas servir à grand chose, choisir entre ça et latin1, voir plus haut.
+
+% distribution ams pour les environnements mathématiques
+% \usepackage[sumlimits]{amsmath}				% package de base de AMS, nécessaire à l'élaboration de matrices
+% \usepackage{amssymb}				
+% \usepackage{amsfonts}				% permettent de tracer les symboles d'ensembles
+% \usepackage{amscd}
+	% d'autres packages de la distribution American Mathematical Association existent et peuvent se révéler nécessaires, voir le livre LaTeX
+
+\usepackage{natbib}				% permet qu'il fasse la bibliographie comme je veux
+
+% packages de mise en page
+\usepackage{multicol}				% dès fois que je voudrais faire du multicolone
+\usepackage{geometry}					% package de base pour la modification des marges
+%\usepackage{margins}					% permet la modification locale des marges, package bidouillé
+\usepackage{fancyhdr}					% gestion des en-tête et pied de page
+
+% packages pour les environnements spéciaux
+\usepackage{verbatim}					% permet l'inclusion de texte non intérprété entre \begin{verbatim} et \end{verbatim}
+\usepackage{graphicx}	% insertion d'images
+%\usepackage{color}						% dès fois que je voudrais autoriser la couleur
+\usepackage{rotating}					% permet de faire une rotation du texte, nécessaire pour les légendes verticales des figures
+\usepackage{ifthen}					% pour l'utilisation d'instructions de contrôle
+\usepackage{slashbox} % permet d'organiser une case d'un tableau a double entrée avec en bas à gauche quelque chose et en haut à droite autre chose.
+% syntaxe : \backslashbox{bas}{haut} -> bas\haut
+% \usepackage{pstricks} %,pst-plot,pst-text,pst-tree,pst-eps,pst-fill,pst-node,pst-math} % marche pas
+
+% déclaration de la taille du texte dans les formules
+\DeclareMathSizes{10}{10}{9}{8}   % Pour un texte de taille 10 
+\DeclareMathSizes{11}{11}{10}{9}   %  Pour un texte de taille 11
+\DeclareMathSizes{12}{12}{11}{10}  %  Pour un texte de taille 12
+
+%description de variables utilisables dans tout le document
+
+% caractéristiques du document
+\author{Corentin Barbu et Sébastien Gourbière}
+
+% macros
+	% définition des "`d'après"'
+\newcommand{\dapres}[1]{
+	{\small d'après \bfseries{#1}}
+	}
+	% permet de numéroter les exos
+\newcounter{NumExo}
+\renewcommand{\theNumExo}{\Roman{NumExo}}
+\newcommand{\exo}{
+	\addtocounter{NumExo}{1} 
+	\setcounter{NumQuestion}{0}
+	{$\! \!$Exercice~\theNumExo~:\ }
+	}
+
+	% permet de numéroter et mettre en page les questions
+	\newcounter{NumQuestion}
+	\renewcommand{\theNumQuestion}{\arabic{NumQuestion}}
+	\newcommand{\question}
+		{	
+			\addtocounter{NumQuestion}{1}
+			{\medskip \underline{Question~\theNumQuestion~:}
+			}
+		}
+	% raccourci pour l'environnement figure, directement inséré dans le texte et centré, le premier argument est le fichier le deuxième est la légende
+	\newcommand{\fig}[3]	%figure latex
+	% \fig{fichier}{1}{titre} 1 correspondrait à la taille mais pas réglée ici
+	% appellable par \ref{fig:fichier}
+		{
+		\begin{figure}[h]
+			\begin{center}
+				\input{#1}	
+				\caption{#3}
+				\label{fig:#1}
+			\end{center}
+		\end{figure}
+		}
+	% idem mais pour des fichiers non latex 
+	% \figx{fichier}{echelle}{légende}
+	\newcommand{\figx}[3]	% insertion de figure, d'images non latex
+		{
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[scale= #2 ]{#1} 	
+				\caption{#3}
+				\label{fig:#1}
+			\end{center}
+		\end{figure}
+		}
+	% raccourci pour la commande eqnarray*, utile notamment pour insertion des espaces de calculs pour les élèves
+	\newcommand{\eqlin}[1]	%équations en lignes
+		{
+		\begin{eqnarray*} #1 \end{eqnarray*}
+		}
+	% raccourci pour écrire les matrices juste avec \mat{}
+	\newcommand{\mat}[1]
+		{
+		\begin{pmatrix} #1 \end{pmatrix}
+		}% 
+	% raccourci pour écrire les determinant juste avec \determ{}
+	\newcommand{\determ}[1]
+		{
+		\begin{vmatrix} #1 \end{vmatrix}
+		}
+	
+	\newcommand{\systeme}[1]
+		{
+		\left\lbrace
+		        \begin{matrix} 
+		        	#1 
+		        \end{matrix}
+		\right.
+		}
+	% commande equivalent (double fleche)
+	\newcommand{\eqv}{\Leftrightarrow}
+	% commande implique (simple fleche)
+	\newcommand{\implique}{\Rightarrow}
+	% commande pour dx/dt
+        \newcommand{\derive}[2]{\frac{d #1}{d #2}}
+	% commande pour d rond sur d rond
+        \newcommand{\derivep}[2]{\frac{\partial #1}{\partial #2}}
+	% pour noter la transposée d'une matrice
+	\newcommand{\transposee}[1]{{\vphantom{#1}}^{\mathit t}{#1}}
+	% pour insertion ou non des commentaires
+	\newboolean{InsCom}		
+	\newcommand{\ComProf}[1]
+		{
+		\ifthenelse{\boolean{InsCom}}
+				{
+				\begin{quote}
+					\itshape #1
+				\end{quote}
+				}
+				{}
+		}
+	% pour les notations spéciales de math comme les ensembles
+	\newcommand{\R}{\mathbb{R}} % les réels
+	\newcommand{\Z}{\mathbb{Z}} % les entiers relatifs
+	\newcommand{\N}{\mathbb{N}} % les entiers naturels
+				
+% options de mise en page
+	% pour que ça me convienne
+	%\setlength{\topmargin}{-1cm}	% permet de changer la marge d'en haut (avant même l'en-tête)
+	\setlength{\textheight}{22cm} % permet de gérer la hauteur de texte et donc la marge basse
+
+% gestion des en-têtes et pied de page :
+	% pour faire mon en tête
+	% dans le cas d'un TD
+	% \TD{
+\newcommand{\TD}[4]{	
+	\pagestyle{fancyplain} % défini le style global du document comme fancy suivant ce qui suit
+	% en-tête
+		\lhead{\fancyplain{}{#3}} %	gauche de l'en-tête
+		\chead{\fancyplain{\textbf{\LARGE TD n\degre #1 : #2} \\ \vspace{0.3cm}
+			\textit{ #3 - #4} \vspace{0.2cm}}{TD #1} } %	centre de l'en-tête
+		\rhead{\fancyplain{}{\textit{#4}}} % Droite de l'en-tête
+		\headheight 2.5cm % modifier la taille des premiers en-tête
+	% pied de page 
+		%\lfoot{pied de page gauche} %	gauche
+		\cfoot{\thepage} %	centre
+		%\rfoot{pied de page droit} 	%	droit
+		\renewcommand{\headrulewidth}{0.4pt} % Largeur du trait de séparation de l'en-tête mettre 0pt pour supprimer le trait.
+		\renewcommand{\plainheadrulewidth}{0.4pt} % Largeur du trait en style plain
+		\renewcommand{\footrulewidth}{0pt} % Largeur du trait de séparation du pied de page mettre 0.4 pt pour revenir à un trait "`classique"' le trait.
+		\thispagestyle{plain}
+		\setlength{\topmargin}{-2cm}
+		} 
+	% dans le cas d'un contrôle continu
+\newcommand{\Titre}[3]{	
+% \Titre{Titre global}{sous titre gauche}{sous-titres droit}
+% mettre les lignes suivantes dans le texte de la première page pour que ça passe du style de page de titre au style normal
+% \setlength{\textheight}{23cm} % la hauteur de texte, à mettre avant le changement de page
+% \clearpage % optionnel, si on veut que l'on passe sur une nouvelle page
+% % en fait clearpage, pas si optionnel que ça si on veut que les modifs s'appliquent proprements donc le placer correctement
+% \pagestyle{fancy} % permet de dire qu'on passe au style fancy tel que définit dans le preambule
+% \setlength{\topmargin}{0cm}
+% \headheight 14.5pt
+	\pagestyle{fancyplain} % défini le style global du document comme fancy suivant ce qui suit
+	% en-tête
+	% dans \fancyplain{texte dans la page de titre}{texte dans les suivantes}	
+		\lhead{\fancyplain{}{#1}} %	gauche de l'en-tête
+		\chead{\fancyplain{ \textbf{\LARGE #1} \\ \vspace{0.3cm}
+			\textit{ #2 - #3} \vspace{0.2cm}}{} } %	centre de l'en-tête
+		\rhead{\fancyplain{}{\textit{#3}}} % Droite de l'en-tête
+		\headheight 2.5cm % modifier la taille des premiers en-tête
+	% pied de page 
+		%\lfoot{pied de page gauche} %	gauche
+		\cfoot{\thepage} %	centre
+		%\rfoot{pied de page droit} 	%	droit
+		\renewcommand{\headrulewidth}{0.4pt} % Largeur du trait de séparation de l'en-tête mettre 0pt pour supprimer le trait.
+		\renewcommand{\plainheadrulewidth}{0.4pt} % Largeur du trait en style plain
+		\renewcommand{\footrulewidth}{0pt} % Largeur du trait de séparation du pied de page mettre 0.4 pt pour revenir à un trait "`classique"' le trait.
+                \thispagestyle{plain}
+		\setlength{\topmargin}{-2cm} % marge au dessus du haut de page pour l'ensemble du document
+		\setlength{\textheight}{23cm} % taille du texte pour l'ensemble du document
+		}
+
+% petit lexique de latex complémentaire
+% \textit{texte à mettre en italique}
+% \emph{texte à mettre en exergue}
+% \underset{truc}{chose} met truc en-dessous de chose à utiliser avec underbrace notamment
+% \underbrace{} accolade dessous
+% \approx à peu près égal à
+% \pm plus ou moins
+% ~ espace insécable dans le texte

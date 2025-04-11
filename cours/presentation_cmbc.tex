@@ -1,0 +1,382 @@
+% Fichier générant le PDF en latex du cours
+% compilable par exemple avec 
+% pdflatex presentation_cmbc.tex
+
+\documentclass[pdftex,xcolor={table}]{beamer} % truc de base
+
+% \documentclass[notes]{beamer} % pour avoir à la fois les transparents et les notes (alternés)
+% \documentclass[notes=only]{beamer} % pour avoir seulement les notes
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm,portrait] % pour avoir deux ``pages'' de notes sur une feuille A4
+% \setbeameroption{notes on second screen}
+\setbeamerfont{note page}{size=\tiny} % pour changer la taille de police des notes
+\setbeamerfont{block body}{size=\small} % pour changer la taille de police des notes
+% look at beamerfontthemedefault.sty for more details
+
+\definecolor{fuchsia}{rgb}{0.5,0.5,0.9}
+% \documentclass[notes=only]{beamer} % pour avoir seulement les notes (super)
+% \documentclass[compress]{beamer} % rétrécie les banières du haut et du bas en étalant horizontalement les parties
+\input{sous_preambuleG_UTF-8.tex}
+
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{multimedia} % pour utiliser la commande movie 
+\usepackage{lmodern}           % Enable Latin Modern fonts
+\usepackage{dsfont} % for the double stoke in math mode
+% \usepackage[hang,flushmargin]{footmisc} % indentation of footnote
+% \usepackage{enumitem} % for customizing items and margins
+
+% \usepackage{beamerthemesplit}
+% \usepackage[final]{movie15}
+\usepackage{times}
+\usepackage{tabularx}
+% \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\mode<presentation>
+%% style 
+% keep \usecolor before \usetheme
+\usecolortheme{forest} % forest is my personal green theme
+% \usetheme{Warsaw}
+% also consider Boadilla, Singapore or Goettingen
+% also consider seahorse, seagull or native Boadilla
+\usetheme[width=0.17\textwidth,hideothersubsections]{Goettingen} % customized in same directory 
+\setbeamertemplate{navigation symbols}{} % pour retirer les symboles de navigation
+\usefonttheme[onlylarge]{structuresmallcapsserif} % change la police des titres
+\setbeamerfont{note page}{size=\tiny} % pour changer la taille de police des notes
+\setbeamerfont{block body}{size=\small} % pour changer la taille de police des notes
+% look at beamerfontthemedefault.sty for more details
+
+% \usetheme{Goettingen}
+\def\euro{\mbox{\raisebox{.25ex}{{\it =}}\hspace{-.5em}{\sf C}}}
+
+% \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm,landscape]
+
+% pour permettre le ``voilage'' des items mentionnés
+\beamertemplatetransparentcovered
+% \opaqueness{90}
+\setbeamercovered{still covered={\opaqueness<1->{25}},again covered={\opaqueness<1->{50}}}
+% \setbeamercovered{visible} % useless ?
+% \beamerboxesdeclarecolorscheme{myalert}{red}{black!5!averagebackgroundcolor}
+% \beamerboxesdeclarecolorscheme{mybox}{blue}{black!5!averagebackgroundcolor}
+\usepackage[absolute,showboxes,overlay]{textpos}
+\textblockorigin{0cm}{0cm} % origine des positions
+% \TPshowboxestrue % affiche le contour des textblock
+\TPshowboxesfalse % n’affiche pas le contour des textblock
+
+\DeclareGraphicsExtensions{.pdf}  % car pdflatex ne sait pas inclure de .eps
+\graphicspath{{./}{./super\_combo/images/}} 
+% \DeclareUnicodeCharacter{00B1}{±}
+
+\title[Ma science sur le web]{
+Ma science sur le web
+}
+\subtitle{
+Développer des applications web en recherche à destination de différents publics
+}
+\author[Corentin Barbu]{Corentin M. Barbu}
+\date{9 avril 2025}
+\institute[ABIES]{INRAE et Ecole Doctorale ABIES (réseau ADUM)}
+
+\setbeamertemplate{navigation symbols}{} % pour retirer les symboles de navigation
+
+% \usepackage{aeguill}
+\usepackage{multirow}
+\usepackage{pifont}
+
+\usepackage{bbding} % for \checkmarck
+\newcommand{\Href}[2]{\href{#1}{\color{blue}#2}}
+\newcommand{\ra}[0]{$\rightarrow$ }
+\newcommand{\Ra}[0]{$\Rightarrow$ }
+\newcommand{\cross}[0]{$\times$ } % to correspond to \checkmark
+\newcommand{\ball}[0]{$\bullet$ } % to correspond to \checkmark
+\newcommand{\about}[0]{$\sim $ } % to correspond to \checkmark
+\renewcommand{\thefootnote}{}
+\renewcommand{\footnotetext}{\tiny\color{black!10}}
+
+\newcolumntype{M}[1]{>{\raggedright}m{#1}}
+\newcolumntype{C}[1]{>{\centering}m{#1}}
+
+\setbeamerfont{itemize/enumerate body}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subbody}{size=\scriptsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\tiny}
+
+% likes to be the last imported package
+
+%%%%%%%%%%%%%%%%
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+  \setlength{\topsep}{0pt}%
+  \setlength{\leftmargin}{#1}%
+  \setlength{\rightmargin}{#2}%
+  \setlength{\listparindent}{\parindent}%
+  \setlength{\itemindent}{\parindent}%
+  \setlength{\parsep}{\parskip}%
+  }%
+\item[]}{\end{list}}
+  %%%%Then \begin{changemargin}{-1cm}{-1cm} makes the margin 1 cm wider on either side of the page until \end{changemargin} appears.
+
+  \newcommand{\ititre}[1]{
+  {\scriptsize { #1 }\par}
+  }
+
+   \makeatletter
+   \newenvironment{customlist}[2]{
+   \ifnum\@itemdepth >2\relax\@toodeep\else
+   \advance\@itemdepth\@ne%
+   \beamer@computepref\@itemdepth%
+   \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+   \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+   \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+   \begin{list}
+     {
+     \usebeamertemplate{itemize \beameritemnestingprefix item}
+     }
+     { \leftmargin=#1 \itemindent=#2
+     \def\makelabel##1{%
+     {%  
+     \hss\llap{{ %
+     \usebeamerfont*{itemize \beameritemnestingprefix item}%
+     \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
+     }%  
+     }%  
+     }
+     \fi
+     }
+     {
+   \end{list}
+   \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}%
+   }
+   \makeatother
+
+
+   % Add support for \subsubsectionpage
+   \def\subsubsectionname{\translate{Subsubsection}}
+   \def\insertsubsubsectionnumber{\arabic{subsubsection}}
+   \setbeamertemplate{subsubsection page}
+   {
+   \begin{centering}
+     {\usebeamerfont{subsubsection name}\usebeamercolor[fg]{subsubsection name}\subsubsectionname~\insertsubsubsectionnumber}
+     \vskip1em\par
+     \begin{beamercolorbox}[sep=4pt,center]{part title}
+       \usebeamerfont{subsubsection title}\insertsubsubsection\par
+     \end{beamercolorbox}
+   \end{centering}
+   }
+   \def\subsubsectionpage{\usebeamertemplate*{subsubsection page}}
+   
+   \AtBeginSection{\frame{\sectionpage}}
+   \AtBeginSubsection{\frame{\subsectionpage}}
+   \AtBeginSubsubsection{\frame{\subsubsectionpage}}
+
+\usepackage{hyperref}
+\hypersetup{
+backref=true,     %permet d'ajouter des liens dans...
+pagebackref=true, %...les bibliographies
+hyperindex=true,  %ajoute des liens dans les index.
+colorlinks=true, %colorise les liens
+breaklinks=true,  %permet le retour à la ligne dans les liens trop longs
+urlcolor= blue,   %couleur des hyperliens
+% linkcolor= blue, %couleur des liens internes
+bookmarks=true,   %créé des signets pour Acrobat
+bookmarksopen=true,            %si les signets Acrobat sont créés,
+%les afficher complètement.
+pdftitle={Introduction aux tests statistiques et aux modèles linéaires}, %informations apparaissant
+pdfauthor={Corentin M. Barbu},     %dans les informations du document
+pdfsubject={Bases stats}          %sous Acrobat.
+pdfkeywords={statistiques, métriques paysagères, élicitation, comparaison, bibliographie}, % list of keywords
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \titlepage
+    \vfill
+    ~
+  \end{frame}
+
+  \begin{frame}{Introduction}
+    \begin{block}{Objectifs}
+      \begin{itemize}
+        \item Savoir développer une application web pour rendre accessible des résultats de recherche ou des outils d’aide à la décision
+        \item Voir plus largement les outils de publications sur internet 
+      \end{itemize}
+      \begin{block}{Programme}
+        \begin{itemize}
+          \item présentations des possibilités de mise en ligne suivant la complexité du projet et le public visé
+          \item application minimaliste fonctionnant en local
+          \item mise en ligne de l'application minimaliste sur un serveur
+        \end{itemize}
+        Note: les exemples seront tous en R mais les mêmes outils sont souvent aussi disponibles sous Python
+      \end{block}
+    \end{block}
+
+  \end{frame}
+
+  \begin{frame}{3 grands types de mises en ligne}
+    \begin{block}{Site internet (plus ou moins interactif)}
+      \begin{itemize}
+        \item Une collection de documents fixes : Quarto (Rmarkdown) \ldots\\
+          ex: \url{https://mocoriba.fr/}
+        \item \ldots mais des graphiques peuvent être interactifs (plotly) \ldots\\
+          ex: \url{https://plotly.com/r/getting-started/}
+        \item \ldots la page peut même contenir de mini applications (shiny) \\
+          ex: \url{https://quarto.org/docs/interactive/shiny/}
+      \end{itemize}
+    \end{block}
+
+    \begin{block}{Une application web}
+      \begin{itemize}
+        \item Une interface qui communique avec un serveur \ldots \\
+        \ldots pour un contenu interactif.
+          ex: \href{https://ccexplorer.eu}{https://ccexplorer.eu}
+      \end{itemize}
+    \end{block}
+
+    \begin{block}{Une API (Plumber)}
+    \begin{itemize}
+      \item Permettre la consultation de bases de données, plus ou moins traitées :
+        ex: Swagger MoCoRiBA: \url{https://mocoriba.fr/mocoribaAPI/\_\_docs\_\_/}
+    \end{itemize}
+    \end{block}
+  \end{frame}
+
+\section{Site Web en Quarto/plotly}
+  \begin{frame}{Quarto}
+    Note: Si Rmarkdown (.Rmd) existe encore, il est progressivement remplacé par Quarto (.qmd)
+    \begin{block}{Comment ça se présente}
+      \begin{itemize}
+        \item Quarto en ligne de commande
+        \item Quarto dans R (python)
+        \item aide de quarto
+      \end{itemize}
+    \end{block}
+    \begin{block}{Avantages et inconvénients}
+      \begin{itemize}
+        \item qmd \ra pdf ou html
+        \item Organisation générale 
+        \item tables des matières automatiques
+        \item Recherche dans les billets de blog et navigation blog facilitées
+        \item[\cross] les html générés sont très lourds 
+      \end{itemize}
+    \end{block}
+  \end{frame}
+%   \begin{frame}{Hello World en Quarto + plotly}
+%     https://quarto.org/
+%   \end{frame}
+%   \begin{frame}{Etapes de l'atelier}
+%     \begin{itemize}
+%       \item Créer un site/blog quarto 
+%       \item Ajouter du texte dépendant de code R
+%       \item Ajouter un graphique dépendant de code R
+%       \item Ajouter un graphique interactif avec Plotly
+%     \end{itemize}
+%     
+%   \end{frame}
+
+\section{Application basique}
+  \begin{frame}{Hellow World en Shiny}
+    
+  \end{frame}
+
+\section{Les programmes compagnons}
+  \begin{frame}{La gestion des codes}
+    \begin{block}{Le protocole/programme ubiquitaire: git}
+      \begin{itemize}
+        \item facilite la sauvegarde
+        \item permet la restauration
+        \item permet le développement en parallèle de plusieurs ``branches''
+      \end{itemize}
+    \end{block}
+  \end{frame}
+  \begin{frame}{La gestion des données}
+    \begin{itemize}
+      \item Fichiers ouverts directement par R (rds/csv/etc.), data/
+      \item Base clé-valeur : ex. REDIS 
+      \item Base de données relationelle : ex: PostgresSQL
+    \end{itemize}
+  \end{frame}
+
+\section{Le déploiement}
+  \begin{frame}{Mise en ligne et passage à l'échelle}
+    \begin{block}{Solutions de mise en ligne}
+      \begin{itemize}
+        \item Solutions d'hébergement d'applications (ex: SK8 \url{https://sk8.inrae.fr/} ou Shinyapps.io)
+        \item Hébergement cloud/``local'' (ex: OVH)
+          \begin{itemize}
+            \item[\Ra] serveur en ligne (linux ?)
+            \item nom de domaine libre (ovh, inrae)
+            \item installation de shiny server \\
+              \ra sudo apt install shiny-server
+            \item placer son application au bon endroit
+            \item proxy (ex:nginx)\\
+              ex: redirection ccexplorer
+          \end{itemize}
+      \end{itemize}
+    \end{block}
+    \begin{block}{Passage à l'échelle}
+      \begin{itemize}
+        \item hébergement d'application : payer
+        \item serveur géré ex: docker swarm
+      \end{itemize}
+    \end{block}
+  \end{frame}
+  \begin{frame}{Passage à l'échelle avec Docker et Traefik}
+    \begin{itemize}
+      \item docker
+        \begin{itemize}
+          \item permet la conteneurisation : ``mini machines virtuelles''
+          \item un conteneur est de tailles beaucoup plus faible qu'une machine virtuelle
+          \item installations dans le conteneur indépendantes du système
+          \item déploiement ultra-rapide sur de nouveaux serveurs
+        \end{itemize}
+      \item docker swarm \\
+        \begin{itemize}
+          \item Permet la gestion de conteneurs multiples 
+        \end{itemize}
+      \item traefik 
+        \begin{itemize}
+          \item Permet de maintenir un utilisateur sur un même conteneur si besoin
+          \item Un conteneur additionnel par lequel passent toutes les requêtes
+        \end{itemize}
+    \end{itemize}
+  \end{frame}
+  \begin{frame}{Sécurisation interne à l'application}
+    \begin{itemize}
+      \item ``purification'' des chaînes de caractères entrées\\
+        ex: \Verb+entreePropre<-gsub(\textquotesingle[\textasciicircum{}a-zA-Z0-9]\textquotesingle,\textquotesingle\textquotesingle,entree)+
+      \item Voir plus généralement les recommendations OPSWAT \url{https://www.opswat.com}
+      \item authentification/gestion de droits par token
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}{Sécurisation serveur}
+    \begin{block}{Les classiques}
+      \begin{itemize}
+        \item pare-feu : ufw (linux) + généralement fourni par hébergeur cloud en amont
+        \item https (letsencrypt/certbot)
+        \item Antivirus (inrae: \url{https://www.withsecure.com/})
+        \item fail2ban : surveillance de logs
+        \item authentification (Basic Auth)
+      \end{itemize}
+    \end{block}
+  \end{frame}
+
+\subsection{Installation et mise à jour}
+     \begin{frame}{Logiciels de synchronisation}
+       \begin{itemize}
+         \item Graphique : 
+         \item en ligne de commande linux : rsync \\
+             rsync -avz repSource/* user@server:repDest/
+       \end{itemize}
+    \end{frame}
+
+
+  \begin{frame}{un site de démonstration}
+    \url{https://github.com/cbarbu/WebMyScience}
+
+    \includegraphics[scale=1]{webmyscience.png} \\
+    
+  \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
